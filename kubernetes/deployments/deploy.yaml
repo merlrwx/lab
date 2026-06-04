@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deployment-test
+  name: deployment-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deployment-test
+  template:
+    metadata:
+      labels:
+        app: deployment-test
+    spec:
+      containers:
+      - image: httpd:alpine3.21
+        name: httpd
+        # test out erronous pods
+        #command: ["/bin/bash", "-c"]
+        #args: ["sleep 5; exit 1"]
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
